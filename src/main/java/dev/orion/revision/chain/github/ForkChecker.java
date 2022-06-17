@@ -59,7 +59,7 @@ public class ForkChecker extends AbstractChecker implements Checker  {
         
         if(repo.getParent().getId().equalsIgnoreCase(repo.getSource().getId())){
             
-            LOGGER.info("É um fork do repositório original");
+            LOGGER.info("É um fork do repositório original e não de outro fork");
             result = this.getNextChecker().check(input);
         } else {
             String message = messages.getString("ForkChecker.repo");
