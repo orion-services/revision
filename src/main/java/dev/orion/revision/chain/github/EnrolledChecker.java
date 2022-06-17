@@ -39,7 +39,7 @@ import dev.orion.revision.mappers.moodle.User;
 @ApplicationScoped
 public class EnrolledChecker extends AbstractChecker implements Checker {
 
-  private static final Logger LOGGER = Logger.getLogger(RepositoryChecker.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(EnrolledChecker.class.getName());
 
   @Override
   public boolean check(Map<String, String> input) {
