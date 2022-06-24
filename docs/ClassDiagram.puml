@@ -137,12 +137,22 @@ package "mappers" {
 
 package "chain" {
     package "github " {
+
        class MoodleUserChecker {
            
        }
+
+       
        class RepositoryChecker {
 
        }
+       class EnroledChecker {
+           
+       }
+       class ForkChecker {
+
+       }
+       
        class TestChangeChecker {
 
        }       
@@ -170,6 +180,14 @@ package "chain" {
     MoodleUserChecker --> RevisionServiceException
     MoodleUserChecker --> ListUser
     MoodleUserChecker --> User
+
+    
+
+    ForkChecker --|> AbstractChecker
+    ForkChecker ..|> Checker
+
+    EnrolledChecker --|> AbstractChecker
+    EnrolledChecker ..|> Checker
 
     RepositoryChecker --|> AbstractChecker
     RepositoryChecker ..|> Checker

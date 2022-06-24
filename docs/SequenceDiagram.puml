@@ -5,9 +5,13 @@ User --> RevisionService : Request
 activate RevisionService
 RevisionService --> MoodleUserChecker : Create Chain
 activate MoodleUserChecker
-MoodleUserChecker --> RepositoryChecker : Next Checker
+MoodleUserChecker --> EnrolledChecker : Next Checker
+activate EnrolledChecker
+EnrolledChecker -->  RepositoryChecker: Next Checker
 activate RepositoryChecker
-RepositoryChecker --> TestChangeChecker : Next Checker
+RepositoryChecker --> ForkChecker : Next Checker
+activate ForkChecker
+ForkChecker --> TestChangeChecker : Next Checker
 activate TestChangeChecker
 TestChangeChecker --> MoodleSendChecker : Next Checker
 activate MoodleSendChecker
@@ -15,6 +19,8 @@ MoodleSendChecker --> Moodle : Update Grade
 MoodleSendChecker --> RevisionService : Response
 deactivate 
 deactivate 
+deactivate
+deactivate
 deactivate
 deactivate
 deactivate
