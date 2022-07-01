@@ -29,7 +29,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import dev.orion.revision.mappers.github.Commit;
 import dev.orion.revision.mappers.github.CommitData;
 import dev.orion.revision.mappers.github.ListWorkflow;
-import dev.orion.revision.mappers.github.Repo;
+import dev.orion.revision.mappers.github.Repository;
 import dev.orion.revision.mappers.moodle.User;
 import io.quarkus.cache.CacheKey;
 import io.quarkus.cache.CacheResult;
@@ -53,7 +53,7 @@ public interface Github {
         @GET
         @Path("/repos/{owner}/{repo}")
         @CacheResult(cacheName = "github-repo")
-        public Repo getRepo(
+        public Repository getRepo(
                 @CacheKey @PathParam("owner") String owner,
                 @CacheKey @PathParam("repo") String repo);
 

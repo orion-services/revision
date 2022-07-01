@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
 import dev.orion.revision.chain.AbstractChecker;
 import dev.orion.revision.chain.Checker;
 import dev.orion.revision.exceptions.RevisionServiceException;
-import dev.orion.revision.mappers.github.Repo;
+import dev.orion.revision.mappers.github.Repository;
 import dev.orion.revision.mappers.moodle.ListCourse;
 import dev.orion.revision.mappers.moodle.Module;
 
@@ -55,7 +55,7 @@ public class ForkChecker extends AbstractChecker implements Checker  {
         Module module = getCourseModule(moodleAssignURL);
         ListCourse courses = getMoodleCourse(module);
         String intro = this.getAssignIntro(courses, moodleAssignURL);
-        Repo repo = github.getRepo(githubLogin, this.getAssignConfig(intro).get("repo"));
+        Repository repo = github.getRepo(githubLogin, this.getAssignConfig(intro).get("repo"));
         
         if(repo.getParent().getId().equalsIgnoreCase(repo.getSource().getId())){
             
