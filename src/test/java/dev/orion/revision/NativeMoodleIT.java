@@ -1,4 +1,4 @@
-package dev.orion.moodle;
+package dev.orion.revision;
 
 import io.quarkus.test.junit.NativeImageTest;
 
