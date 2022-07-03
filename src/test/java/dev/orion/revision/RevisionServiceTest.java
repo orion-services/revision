@@ -6,24 +6,25 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
 @TestHTTPEndpoint(RevisionService.class) 
-class ServiceTest {
+class RevisionServiceTest {
 
-    // @Test
-    //@DisplayName("Test empty input")
+    @Test
+    @DisplayName("Test empty input")
     // @Order(1)
-    //public void empty() {
-    // given()
-    //        .formParam("githubProfileURL", "")
-    //        .formParam("moodleProfileURL", "")
-    //        .formParam("moodleAssign", "")
-    //        .when().post("/check")
-    //        .then()
-    //        .statusCode(400);
-    //        .body(is("Rodrigo Prestes Machado"))
-    // }
+    public void empty() {
+        given()
+            .formParam("githubProfileURL", "")
+            .formParam("moodleProfileURL", "")
+            .formParam("moodleAssign", "")
+            .when().post()
+            .then()
+            .statusCode(400);
+            //.body(is("Rodrigo Prestes Machado"))
+    }
 
     @Test
     @DisplayName("Test wrong user")
