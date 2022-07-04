@@ -55,17 +55,17 @@ public class EnrolledChecker extends AbstractChecker implements Checker {
 
     // Get list of enrolled students
     ListUser mCourseUsers = getMoodleEnrolledUsers(module);
-    boolean i = false;
+    boolean enrolled = false;
     
     for (User user : mCourseUsers) {
       // Verifies if the user are enrolled in this course module
       if (mUsers.getFirstUserName().equalsIgnoreCase(user.getFullname())) {
-        i = true;        
+        enrolled = true;        
         break;
       } 
     }
 
-    if (i == true) {
+    if (enrolled) {
       LOGGER.info("O usuário está matrículado no curso");
       result = this.getNextChecker().check(input);
     } else {

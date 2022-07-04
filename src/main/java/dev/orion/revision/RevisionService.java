@@ -119,8 +119,8 @@ public class RevisionService {
                 if (result.equals("true")) {
                     message = "Tarefa enviada com sucesso!";
                 }
-                Map<String, String> response = Map.of("Message", message);
-                return response;
+
+                return Map.of("Message", message);
     }
 
     /**
