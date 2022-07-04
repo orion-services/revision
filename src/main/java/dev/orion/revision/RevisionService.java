@@ -42,6 +42,7 @@ import org.jboss.resteasy.client.exception.ResteasyWebApplicationException;
 import dev.orion.revision.chain.AbstractChecker;
 import dev.orion.revision.chain.Checker;
 import dev.orion.revision.chain.github.EnrolledChecker;
+import dev.orion.revision.chain.github.ForkChecker;
 import dev.orion.revision.chain.github.MoodleUserChecker;
 import dev.orion.revision.chain.github.RepositoryChecker;
 import dev.orion.revision.chain.github.TestChangeChecker;
@@ -62,6 +63,7 @@ public class RevisionService {
     @Inject protected MoodleUserChecker moodleUser;
     @Inject protected EnrolledChecker enrolled;
     @Inject protected RepositoryChecker repository;
+    @Inject protected ForkChecker fork;
     @Inject protected TestChangeChecker testChange;
     @Inject protected MoodleSendChecker moodleSend;
 
@@ -129,7 +131,8 @@ public class RevisionService {
     private Checker createGithubChain(){
         moodleUser.setNextChecker(enrolled);
         enrolled.setNextChecker(repository);
-        repository.setNextChecker(testChange);
+        repository.setNextChecker(fork);
+        fork.setNextChecker(testChange);
         testChange.setNextChecker(moodleSend);
         return moodleUser;
     }
