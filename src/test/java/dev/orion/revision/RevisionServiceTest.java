@@ -1,6 +1,7 @@
 package dev.orion.revision;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
@@ -14,8 +15,8 @@ class RevisionServiceTest {
 
     @Test
     @DisplayName("Test empty input")
-    // @Order(1)
-    public void empty() {
+    @Order(1)
+    void empty() {
         given()
             .formParam("githubProfileURL", "")
             .formParam("moodleProfileURL", "")
@@ -28,7 +29,7 @@ class RevisionServiceTest {
 
     @Test
     @DisplayName("Test wrong user")
-    // @Order(2)
+    @Order(2)
     void wrong() {
          given()
             .formParam("githubProfileURL", "https://github.com")
