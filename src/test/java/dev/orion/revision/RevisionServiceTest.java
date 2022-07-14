@@ -32,6 +32,7 @@ class RevisionServiceTest {
             //.body(is("Rodrigo Prestes Machado"))
     }
 
+    /*     
     @Test
     @DisplayName("Test wrong user")
     @Order(2)
@@ -47,7 +48,7 @@ class RevisionServiceTest {
             .statusCode(400);
      }
      
-    /*     @Test
+    @Test
     @DisplayName("Test wrong Moodle user")
     @Order(2)
     void wrongMoodleUser() {
