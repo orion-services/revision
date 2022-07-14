@@ -152,7 +152,7 @@
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>install</arguments>
+              <arguments>install --no-optional</arguments>
             </configuration>
           </execution>
           <execution>
@@ -169,6 +169,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
         <executions>
           <execution>
             <id>npm-watch</id>
