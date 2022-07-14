@@ -103,15 +103,15 @@ public class RevisionService {
                 }
                 catch (IndexOutOfBoundsException e) {
                     message = messages.getString("RevisionService.IndexOutOfBoundsException");
-                    throw new RevisionServiceException(message, Response.Status.NOT_FOUND);
+                    throw new RevisionServiceException(message, Response.Status.BAD_REQUEST);
                 }
                 catch(ResteasyWebApplicationException e){
                     message = messages.getString("RevisionService.ResteasyWebApplicationException");
-                    throw new RevisionServiceException(message, Response.Status.NOT_FOUND);
+                    throw new RevisionServiceException(message, Response.Status.BAD_REQUEST);
                 }
                 catch(NullPointerException e){
                     message = messages.getString("RevisionService.NullPointerException");
-                    throw new RevisionServiceException(message, Response.Status.NOT_FOUND);
+                    throw new RevisionServiceException(message, Response.Status.BAD_REQUEST);
                 }
 
                 if (result.equals("true")) {
