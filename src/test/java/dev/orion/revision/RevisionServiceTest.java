@@ -6,47 +6,71 @@ import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @QuarkusTest
-@TestHTTPEndpoint(RevisionService.class)
 class RevisionServiceTest {
+
+/*
+ * @TestHTTPEndpoint(RevisionService.class)
+ */
+
 
     @Test
     @DisplayName("Test empty input")
     @Order(1)
     void empty() {
+        RestAssured.baseURI = "http://localhost:8080";
         given()
             .formParam("githubProfileURL", "")
             .formParam("moodleProfileURL", "")
             .formParam("moodleAssignURL", "")
-            .when().post()
+            .when().post("/check")
             .then()
-            .statusCode(400);
-            //.body(is("Rodrigo Prestes Machado"))
+            .statusCode(400)
+            .body(containsString("exception"));
     }
 
-    /*     
     @Test
-    @DisplayName("Test wrong inputs")
+    @DisplayName("Test wrong Github user")
     @Order(2)
     void wrongUser() {
-         given()
+        RestAssured.baseURI = "http://localhost:8080";
+        given()
             .formParam("githubProfileURL", "https://github.com")
             .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br")
             .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
-            .when().post()
+            .when().post("/check")
             .then()
-            //.header("Content-Type", "application/json")
-            .statusCode(400);
+            .statusCode(400)
+            .body(is("{\"Message\":\"Não foi possível completar a sua requisição, possivelmente você informou um usuário do Github inexistente\"}"));
      }
      
+    @Test
+    @DisplayName("Send data with success")
+    @Order(2)
+    void sucessfull() {
+        RestAssured.baseURI = "http://localhost:8080";
+        given()
+            .formParam("githubProfileURL", "https://github.com/graziellarodrigues")
+            .formParam("moodleProfileURL", "http://www.moodledeteste.kinghost.net/moodle/user/profile.php?id=4")
+            .formParam("moodleAssignURL", "http://www.moodledeteste.kinghost.net/moodle/mod/assign/view.php?id=2")
+            .when().post("/check")
+            .then()
+            .statusCode(200)
+            .body(is("{\"Message\":\"Tarefa enviada com sucesso!\"}"));
+    }
+ 
+
+    /*     
     @Test
     @DisplayName("Test wrong Moodle user")
     @Order(2)
