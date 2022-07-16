@@ -42,6 +42,7 @@ import org.jboss.resteasy.client.exception.ResteasyWebApplicationException;
 import dev.orion.revision.chain.AbstractChecker;
 import dev.orion.revision.chain.Checker;
 import dev.orion.revision.chain.github.EnrolledChecker;
+import dev.orion.revision.chain.github.ForkChecker;
 import dev.orion.revision.chain.github.MoodleUserChecker;
 import dev.orion.revision.chain.github.RepositoryChecker;
 import dev.orion.revision.chain.github.TestChangeChecker;
@@ -62,6 +63,7 @@ public class RevisionService {
     @Inject protected MoodleUserChecker moodleUser;
     @Inject protected EnrolledChecker enrolled;
     @Inject protected RepositoryChecker repository;
+    @Inject protected ForkChecker fork;
     @Inject protected TestChangeChecker testChange;
     @Inject protected MoodleSendChecker moodleSend;
 
@@ -103,22 +105,22 @@ public class RevisionService {
                 }
                 catch (IndexOutOfBoundsException e) {
                     message = messages.getString("RevisionService.IndexOutOfBoundsException");
-                    throw new RevisionServiceException(message, Response.Status.NOT_FOUND);
+                    throw new RevisionServiceException(message, Response.Status.BAD_REQUEST);
                 }
                 catch(ResteasyWebApplicationException e){
                     message = messages.getString("RevisionService.ResteasyWebApplicationException");
-                    throw new RevisionServiceException(message, Response.Status.NOT_FOUND);
+                    throw new RevisionServiceException(message, Response.Status.BAD_REQUEST);
                 }
                 catch(NullPointerException e){
                     message = messages.getString("RevisionService.NullPointerException");
-                    throw new RevisionServiceException(message, Response.Status.NOT_FOUND);
+                    throw new RevisionServiceException(message, Response.Status.BAD_REQUEST);
                 }
 
                 if (result.equals("true")) {
                     message = "Tarefa enviada com sucesso!";
                 }
-                Map<String, String> response = Map.of("Message", message);
-                return response;
+
+                return Map.of("Message", message);
     }
 
     /**
@@ -129,7 +131,8 @@ public class RevisionService {
     private Checker createGithubChain(){
         moodleUser.setNextChecker(enrolled);
         enrolled.setNextChecker(repository);
-        repository.setNextChecker(testChange);
+        repository.setNextChecker(fork);
+        fork.setNextChecker(testChange);
         testChange.setNextChecker(moodleSend);
         return moodleUser;
     }
