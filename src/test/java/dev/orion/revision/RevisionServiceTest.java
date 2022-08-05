@@ -4,76 +4,62 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+import com.google.inject.Inject;
+
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.containsString;
 
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 @QuarkusTest
 class RevisionServiceTest {
 
-/*
- * @TestHTTPEndpoint(RevisionService.class)
- */
+    @Inject
+    RevisionService service;
 
-
+    @TestHTTPEndpoint(RevisionService.class) 
+    
     @Test
-    @DisplayName("Test empty input")
+    @DisplayName("Test q input")
     @Order(1)
     void empty() {
-        RestAssured.baseURI = "http://localhost:8080";
+        //RestAssured.baseURI = "http://localhost:8080";
         given()
             .formParam("githubProfileURL", "")
             .formParam("moodleProfileURL", "")
             .formParam("moodleAssignURL", "")
-            .when().post("/check")
+            .when().post()
             .then()
-            .statusCode(400)
-            .body(containsString("exception"));
-    }
+            .statusCode(400);
+            
+            
 
-    @Test
-    @DisplayName("Test wrong Github user")
-    @Order(2)
-    void wrongUser() {
-        RestAssured.baseURI = "http://localhost:8080";
-        given()
-            .formParam("githubProfileURL", "https://github.com")
-            .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br")
-            .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
-            .when().post("/check")
-            .then()
-            .statusCode(400)
-            .body(is("{\"Message\":\"Não foi possível completar a sua requisição, possivelmente você informou um usuário do Github inexistente\"}"));
-     }
-     
-    @Test
-    @DisplayName("Send data with success")
-    @Order(2)
-    void sucessfull() {
-        RestAssured.baseURI = "http://localhost:8080";
-        given()
-            .formParam("githubProfileURL", "https://github.com/graziellarodrigues")
-            .formParam("moodleProfileURL", "http://www.moodledeteste.kinghost.net/moodle/user/profile.php?id=4")
-            .formParam("moodleAssignURL", "http://www.moodledeteste.kinghost.net/moodle/mod/assign/view.php?id=2")
-            .when().post("/check")
-            .then()
-            .statusCode(200)
-            .body(is("{\"Message\":\"Tarefa enviada com sucesso!\"}"));
+            //.body("parameterViolations", (equalTo("<[{constraintType=PARAMETER, path=check.githubProfileURL, message=não deve estar em branco, value=}, {constraintType=PARAMETER, path=check.moodleProfileURL, message=não deve estar em branco, value=}, {constraintType=PARAMETER, path=check.moodleAssignURL, message=não deve estar em branco, value=}]>")) );
+            
     }
- 
+    // @TestHTTPEndpoint(RevisionService.class) 
+    // @Test
+    // @DisplayName("Test wrongs inputs")
+    // @Order(2)
+    // void wrongUser() {
+    //      given()
+    //         //.accept(ContentType.JSON)
+    //         .formParam("githubProfileURL", "https://github.com")
+    //         .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br")
+    //         .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
+    //         .when().post()
+    //         .then()
+    //         .statusCode(500);
+    //        // .body(is("Rodrigo Prestes Machado"));
+            
+    //  }
 
     /*     
     @Test
     @DisplayName("Test wrong Moodle user")
-    @Order(2)
+    @Order(3)
     void wrongMoodleUser() {
          given()
             .formParam("githubProfileURL", "https://github.com/amfabian")
@@ -81,22 +67,23 @@ class RevisionServiceTest {
             .formParam("moodleAssignURL", "http://localhost/mod/assign/view.php?id=2")
             .when().post()
             .then()
-            .statusCode(400);
+            .statusCode(404);
      }
 
     @Test
     @DisplayName("Test wrong Github user")
-    @Order(2)
-    void wrong() {
+    @Order(4)
+    void wrongGithubUser() {
          given()
             .formParam("githubProfileURL", "https://github.com")
             .formParam("moodleProfileURL", "http://localhost/user/profile.php?id=4")
             .formParam("moodleAssignURL", "http://localhost/mod/assign/view.php?id=2")
             .when().post()
             .then()
-            .statusCode(400);
+            .statusCode(404);
      }
 
+<<<<<<< HEAD
      @Test
     @DisplayName("Test wrong Assign")
     @Order(2)
@@ -109,11 +96,25 @@ class RevisionServiceTest {
             .then()
             .statusCode(400);
     }
+=======
+    //  @Test
+    // @DisplayName("Test wrong Assign")
+    // @Order(5)
+    // void wrongAssign() {
+    //      given()
+    //         .formParam("githubProfileURL", "https://github.com/graziellarodrigues")
+    //         .formParam("moodleProfileURL", "http://localhosts/user/profile.php?id=4")
+    //         .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
+    //         .when().post()
+    //         .then()
+    //         .statusCode(404);
+    // }
+>>>>>>> tests
              
      */
 
     // @Test
-    // @DisplayName("Test wrong moodle")
+    // @DisplayName("Test wrong moodle")ss
     // @Order(3)
     // public void wrongMoodle() {
     //     given()
