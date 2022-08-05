@@ -45,23 +45,7 @@ public class MoodleSendChecker extends AbstractChecker implements Checker {
         Module module = getCourseModule(input.get("moodleAssignURL"));
 
         int idUser = Integer.parseInt(getMoodleId(input.get("moodleProfileURL")));
-
-        System.out.println("##################################");
-        System.out.println("                    MOODLE UPDATE GRADE");
-        System.out.println("MOODLE_TOKEN: " +MOODLE_TOKEN);
-        System.out.println("MOODLE_GRADE: " +MOODLE_GRADE);
-        System.out.println("MOODLE_JSON_FORMAT: " +MOODLE_JSON_FORMAT);
-        System.out.println("assignmentid: "+ module.getCm().getInstance());
-        System.out.println("userid: "+ idUser);
-        System.out.println("grade: "+ 10);
-        System.out.println("attemptnumber: "+ -1);
-        System.out.println("addattempt: "+ 1);
-        System.out.println("workflowstate: "+ "rpm");
-        System.out.println("applytoall: "+ 1);
-        System.out.println("plugindata[assignfeedbackcomments_editor][text]: "+ input.get("hash"));
-        System.out.println("plugindata[assignfeedbackcomments_editor][format]: "+ 2);
-
-
+        
         moodle.updateGrade(MOODLE_TOKEN, MOODLE_GRADE, MOODLE_JSON_FORMAT,
                 module.getCm().getInstance(), idUser,
                 10, -1, 1, "rpm", 1, input.get("hash"), 2);

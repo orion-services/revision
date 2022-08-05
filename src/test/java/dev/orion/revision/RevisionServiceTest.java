@@ -39,24 +39,24 @@ class RevisionServiceTest {
             //.body("parameterViolations", (equalTo("<[{constraintType=PARAMETER, path=check.githubProfileURL, message=não deve estar em branco, value=}, {constraintType=PARAMETER, path=check.moodleProfileURL, message=não deve estar em branco, value=}, {constraintType=PARAMETER, path=check.moodleAssignURL, message=não deve estar em branco, value=}]>")) );
             
     }
-    // @TestHTTPEndpoint(RevisionService.class) 
-    // @Test
-    // @DisplayName("Test wrongs inputs")
-    // @Order(2)
-    // void wrongUser() {
-    //      given()
-    //         //.accept(ContentType.JSON)
-    //         .formParam("githubProfileURL", "https://github.com")
-    //         .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br")
-    //         .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
-    //         .when().post()
-    //         .then()
-    //         .statusCode(500);
-    //        // .body(is("Rodrigo Prestes Machado"));
+    @TestHTTPEndpoint(RevisionService.class) 
+    @Test
+    @DisplayName("Test wrongs inputs")
+    @Order(2)
+    void wrongUser() {
+         given()
+            //.accept(ContentType.JSON)
+            .formParam("githubProfileURL", "https://github.com")
+            .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br")
+            .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
+            .when().post()
+            .then()
+            .statusCode(400);
+           // .body(is("Rodrigo Prestes Machado"));
             
-    //  }
+     }
 
-    /*     
+     
     @Test
     @DisplayName("Test wrong Moodle user")
     @Order(3)
@@ -83,46 +83,31 @@ class RevisionServiceTest {
             .statusCode(404);
      }
 
-<<<<<<< HEAD
      @Test
     @DisplayName("Test wrong Assign")
-    @Order(2)
+    @Order(5)
     void wrongAssign() {
          given()
             .formParam("githubProfileURL", "https://github.com/graziellarodrigues")
-            .formParam("moodleProfileURL", "http://localhost/user/profile.php?id=4")
+            .formParam("moodleProfileURL", "http://localhosts/user/profile.php?id=4")
             .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
             .when().post()
             .then()
-            .statusCode(400);
+            .statusCode(404);
     }
-=======
-    //  @Test
-    // @DisplayName("Test wrong Assign")
-    // @Order(5)
-    // void wrongAssign() {
-    //      given()
-    //         .formParam("githubProfileURL", "https://github.com/graziellarodrigues")
-    //         .formParam("moodleProfileURL", "http://localhosts/user/profile.php?id=4")
-    //         .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
-    //         .when().post()
-    //         .then()
-    //         .statusCode(404);
-    // }
->>>>>>> tests
              
-     */
+     
 
-    // @Test
-    // @DisplayName("Test wrong moodle")ss
-    // @Order(3)
-    // public void wrongMoodle() {
-    //     given()
-    //             .formParam("githubProfileURL", "https://github.com/rodrigoprestesmachado")
-    //             .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br")
-    //             .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
-    //             .when().post("/verify")
-    //             .then()
-    //             .statusCode(400);
-    // }
+    @Test
+    @DisplayName("Test wrong moodle")
+    @Order(3)
+    public void wrongMoodle() {
+        given()
+                .formParam("githubProfileURL", "https://github.com/rodrigoprestesmachado")
+                .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br")
+                .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br")
+                .when().post("/verify")
+                .then()
+                .statusCode(404);
+    }
 }

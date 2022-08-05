@@ -182,17 +182,6 @@ public abstract class AbstractChecker {
      * @return Return a ListUser object from Moodle
      */
     protected ListUser getMoodleUser(String moodleProfileURL){
-        System.out.println("##################################");
-        System.out.println("                    MOODLE GET USER");
-        System.out.println("MOODLE_TOKEN: " +MOODLE_TOKEN);
-        System.out.println("MOODLE_USERS: " +MOODLE_USERS);
-        System.out.println("MOODLE_JSON_FORMAT: " +MOODLE_JSON_FORMAT);
-        System.out.println("KEY: id");
-        System.out.println("id: "+this.getMoodleId(moodleProfileURL));
-        System.out.println(moodle.getUser(MOODLE_TOKEN, MOODLE_USERS, MOODLE_JSON_FORMAT, "id",
-        this.getMoodleId(moodleProfileURL)));
-
-
         return moodle.getUser(MOODLE_TOKEN, MOODLE_USERS, MOODLE_JSON_FORMAT, "id",
         this.getMoodleId(moodleProfileURL));
     }
@@ -205,15 +194,6 @@ public abstract class AbstractChecker {
      * @return Return a list of users enrolled in a course module from Moodle
      */
     protected ListUser getMoodleEnrolledUsers(Module courseModule){
-
-        System.out.println("##################################");
-        System.out.println("                    MOODLE GET USER ENROLLED USERS");
-        System.out.println("MOODLE_TOKEN: " +MOODLE_TOKEN);
-        System.out.println("MOODLE_ENROLLED: " +MOODLE_ENROLLED);
-        System.out.println("MOODLE_JSON_FORMAT: " +MOODLE_JSON_FORMAT);
-        System.out.println("KEY: id");
-        System.out.println("cmid: "+ courseModule.getCm().getCourse());
-
         return moodle.getEnrolled(MOODLE_TOKEN, MOODLE_ENROLLED, MOODLE_JSON_FORMAT, courseModule.getCm().getCourse());
     }
 
@@ -226,16 +206,7 @@ public abstract class AbstractChecker {
      *
      * @return Returns the curse module object in Moodle
      */
-    protected Module getCourseModule(String moodleAssignURL){
-        
-        System.out.println("##################################");
-        System.out.println("                    MOODLE GET COURSE MODULE");
-        System.out.println("MOODLE_TOKEN: " +MOODLE_TOKEN);
-        System.out.println("MOODLE_MODULE: " +MOODLE_MODULE);
-        System.out.println("MOODLE_JSON_FORMAT: " +MOODLE_JSON_FORMAT);
-        System.out.println("cmid: "+ this.getMoodleId(moodleAssignURL));
-        
-        
+    protected Module getCourseModule(String moodleAssignURL){               
         return moodle.getModule(MOODLE_TOKEN, MOODLE_MODULE, MOODLE_JSON_FORMAT,
                 this.getMoodleId(moodleAssignURL));
     }
@@ -249,14 +220,6 @@ public abstract class AbstractChecker {
      * @return A lists of courses (with only one course)
      */
     protected ListCourse getMoodleCourse(Module courseModule){
-
-        System.out.println("##################################");
-        System.out.println("                    MOODLE getMoodleCourse");
-        System.out.println("MOODLE_TOKEN: " +MOODLE_TOKEN);
-        System.out.println("MOODLE_ASSIGN: " +MOODLE_ASSIGN);
-        System.out.println("MOODLE_JSON_FORMAT: " +MOODLE_JSON_FORMAT);
-        System.out.println("xxx: "+ courseModule.getCm().getCourse());
-
         return moodle.getCourses(MOODLE_TOKEN, MOODLE_ASSIGN, MOODLE_JSON_FORMAT,
             courseModule.getCm().getCourse());
     }
