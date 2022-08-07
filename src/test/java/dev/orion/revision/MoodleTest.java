@@ -30,7 +30,7 @@ class MoodleTest {
     @Test
     @DisplayName("Test Moodle core_user_get_users")
     @Order(1)
-    public void testGetUser() {
+    void testGetUser() {
         given()
         .formParam("wstoken", "8328d31ad34d4695c924fe8d2e1b9d02")
         .formParam("wsfunction", "core_user_get_users")
@@ -46,7 +46,7 @@ class MoodleTest {
     @Test
     @DisplayName("Test Moodle core_course_get_enrolled_users_by_cmid")
     @Order(2)
-    public void testGetEnrolled() {
+    void testGetEnrolled() {
         given()
         .formParam("wstoken", "8328d31ad34d4695c924fe8d2e1b9d02")
         .formParam("wsfunction", "core_course_get_enrolled_users_by_cmid")
@@ -61,7 +61,7 @@ class MoodleTest {
     @Test
     @DisplayName("Test Moodle core_course_get_course_module")
     @Order(3)
-    public void testGetModule() {
+    void testGetModule() {
         given()
         .formParam("wstoken", "8328d31ad34d4695c924fe8d2e1b9d02")
         .formParam("wsfunction", "core_course_get_course_module")
@@ -76,7 +76,7 @@ class MoodleTest {
     @Test
     @DisplayName("Test Moodle mod_assign_get_assignments")
     @Order(4)
-    public void testGetCourses() {
+    void testGetCourses() {
         given()
         .formParam("wstoken", "8328d31ad34d4695c924fe8d2e1b9d02")
         .formParam("wsfunction", "mod_assign_get_assignments")
@@ -91,7 +91,7 @@ class MoodleTest {
     @Test
     @DisplayName("Test Moodle mod_assign_save_grade")
     @Order(5)
-    public void testUpdateGrade() {
+    void testUpdateGrade() {
         given()
         .formParam("wstoken", "8328d31ad34d4695c924fe8d2e1b9d02")
         .formParam("wsfunction", "mod_assign_save_grade")
@@ -109,6 +109,5 @@ class MoodleTest {
         .then()
         .body(is(""))
         .statusCode(200);
-    } 
-    
+    }     
 }
