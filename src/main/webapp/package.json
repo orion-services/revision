@@ -43,6 +43,6 @@
     "not ie 11"
   ],
   "optionalDependencies": {
-    "fsevents": "^2.3.2"
+    "fsevents": "^2.1.2"
   }
 }
