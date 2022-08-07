@@ -154,7 +154,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>npm install</id>
+            <id>npm install --no-optional</id>
             <goals>
               <goal>npm</goal>
             </goals>
