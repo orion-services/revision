@@ -39,7 +39,7 @@ class MoodleTest {
         .formParam("criteria[0][value]", "4")
         .when().post("http://localhost:8089/webservice/rest/server.php")
         .then()
-        .body(is("{\"users\":[{\"id\":4,\"username\":\"ws_aluno\",\"firstname\":\"Graziella\",\"lastname\":\"Rodrigues\",\"fullname\": \"Graziella Rodrigues\",\"email\":\"ws_aluno@email.com\",\"department\": \"\",\"firstaccess\": 1652907241,\"lastaccess\":1652912238,\"auth\":\"manual\",\"suspended\":false,\"confirmed\":true,\"lang\":\"en\",\"theme\": \"\",\"timezone\":\"America/Sao_Paulo\",\"mailformat\":1,\"description\":\"<p dir=\\\"ltr\\\"style=\\\"text-align:left;\\\">.<br /></p>\",\"descriptionformat\":1,\"country\":\"BR\",\"profileimageurlsmall\": \"http://localhost/theme/image.php/boost/core/1651608355/u/f2\",\"profileimageurl\":\"http://localhost/theme/image.php/boost/core/1651608355/u/f1\"}],\"warnings\":[]}"))
+        .body(is("{\"users\":[{\"id\":4,\"username\":\"ws_aluno\",\"firstname\":\"Nome\",\"lastname\":\"Sobrenome\",\"fullname\": \"Nome Sobrenome\",\"email\":\"aluno@email.com\",\"department\": \"\",\"firstaccess\": 1652907241,\"lastaccess\":1652912238,\"auth\":\"manual\",\"suspended\":false,\"confirmed\":true,\"lang\":\"en\",\"theme\": \"\",\"timezone\":\"America/Sao_Paulo\",\"mailformat\":1,\"country\":\"BR\",\"warnings\":[]}"))
         .statusCode(200);
     }
 

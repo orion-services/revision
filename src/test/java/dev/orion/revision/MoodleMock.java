@@ -16,6 +16,8 @@
 package dev.orion.revision;
 
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -37,11 +39,18 @@ public class MoodleMock implements QuarkusTestResourceLifecycleManager {
         wireMockServer.start();
         configureFor(8089);
 
+        LinkedHashMap<String, String> map1 = new LinkedHashMap<>();
+        map1.put("wstoken", "8328d31ad34d4695c924fe8d2e1b9d02");
+        map1.put("wsfunction", "core_user_get_users");
+        map1.put("moodlewsrestformat", "json");
+        map1.put("criteria%5B0%5D%5Bkey%5D", "id");
+        map1.put("criteria%5B0%5D%5Bvalue%5D", "4");
+
         stubFor(post(urlEqualTo("/webservice/rest/server.php"))
-            .withRequestBody(containing("core_user_get_users"))
+            .withRequestBody(equalTo(WireMockUtil.toFormUrlEncoded(map1)))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/json")
-                .withBody("{\"users\":[{\"id\":4,\"username\":\"ws_aluno\",\"firstname\":\"Graziella\",\"lastname\":\"Rodrigues\",\"fullname\": \"Graziella Rodrigues\",\"email\":\"ws_aluno@email.com\",\"department\": \"\",\"firstaccess\": 1652907241,\"lastaccess\":1652912238,\"auth\":\"manual\",\"suspended\":false,\"confirmed\":true,\"lang\":\"en\",\"theme\": \"\",\"timezone\":\"America/Sao_Paulo\",\"mailformat\":1,\"description\":\"<p dir=\\\"ltr\\\"style=\\\"text-align:left;\\\">.<br /></p>\",\"descriptionformat\":1,\"country\":\"BR\",\"profileimageurlsmall\": \"http://localhost/theme/image.php/boost/core/1651608355/u/f2\",\"profileimageurl\":\"http://localhost/theme/image.php/boost/core/1651608355/u/f1\"}],\"warnings\":[]}")
+                .withBody("{\"users\":[{\"id\":4,\"username\":\"ws_aluno\",\"firstname\":\"Nome\",\"lastname\":\"Sobrenome\",\"fullname\": \"Nome Sobrenome\",\"email\":\"aluno@email.com\",\"department\": \"\",\"firstaccess\": 1652907241,\"lastaccess\":1652912238,\"auth\":\"manual\",\"suspended\":false,\"confirmed\":true,\"lang\":\"en\",\"theme\": \"\",\"timezone\":\"America/Sao_Paulo\",\"mailformat\":1,\"country\":\"BR\",\"warnings\":[]}")
                 .withStatus(200)));
 
         stubFor(post(urlEqualTo("/webservice/rest/server.php"))
@@ -82,5 +91,37 @@ public class MoodleMock implements QuarkusTestResourceLifecycleManager {
             wireMockServer.stop();
         }
     }
-    
+
+    public static class WireMockUtil {
+
+        public static String toFormUrlEncoded(LinkedHashMap<String, String> map) {
+            if (map == null) {
+                return "";
+            }
+            StringBuilder sb = new StringBuilder();
+            Iterator<String> it = map.keySet().iterator();
+            while (it.hasNext()) {
+                String key = it.next();
+                String value = map.get(key);
+                appendFormUrlEncoded(key, value, sb);
+                if (it.hasNext()) {
+                    sb.append('&');
+                }
+            }
+            return sb.toString();
+        }
+
+        public static String toFormUrlEncoded(String key, String value) {
+            StringBuilder sb = new StringBuilder();
+            appendFormUrlEncoded(key, value, sb);
+            return sb.toString();
+        }
+
+        public static void appendFormUrlEncoded(String key, String value, StringBuilder sb) {
+            sb.append(key).append('=');
+            if (value != null) {
+                sb.append(value);
+            }
+        }
+    }
 }

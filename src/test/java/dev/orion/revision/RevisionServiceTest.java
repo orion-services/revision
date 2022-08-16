@@ -71,7 +71,7 @@ class RevisionServiceTest {
     void wrongAssign() {
          given()
             .formParam("githubProfileURL", "https://github.com/graziellarodrigues")
-            .formParam("moodleProfileURL", "http://localhosts/user/profile.php?id=4")
+            .formParam("moodleProfileURL", "http://moodle.poa.ifrs.edu.br/user/profile.php?id=4")
             .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br/")
             .when().post()
             .then()
