@@ -14,7 +14,7 @@ import dev.orion.revision.mappers.github.Repository;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class RepositoryTest {
+class RepositoryTest {
     
    
     Repository repo;
@@ -26,21 +26,21 @@ public class RepositoryTest {
     @Test
     @DisplayName("Repository Mapper Test isFork")
     @Order(1)
-    public void testRepositoryisFork(){
+    void testRepositoryisFork(){
         repo = github.getRepo("graziellarodrigues", "cpw2-web-storage");
         Assertions.assertEquals(true, repo.isFork());
     } 
     @Test
     @DisplayName("Repository Mapper Test id")
     @Order(2)
-    public void testRepositoryId(){
+    void testRepositoryId(){
         repo = github.getRepo("graziellarodrigues", "cpw2-web-storage");
         Assertions.assertEquals("438989221", repo.getId());
     } 
     @Test
     @DisplayName("Repository Mapper Test Parent")
     @Order(3)
-    public void testRepositoryParent(){
+    void testRepositoryParent(){
         repo = github.getRepo("graziellarodrigues", "cpw2-web-storage");
         Assertions.assertEquals("435871324", repo.getParent().getId());
     } 

@@ -14,7 +14,7 @@ import dev.orion.revision.mappers.github.Commit;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class CommitTest {
+class CommitTest {
     
     Commit commit;
 
@@ -25,14 +25,14 @@ public class CommitTest {
     @Test
     @DisplayName("Commit Mapper Test Login")
     @Order(1)
-    public void testCommitgetAuthorgetLogin(){
+    void testCommitgetAuthorgetLogin(){
        commit = github.getCommit("rpmhub", "cpw2-web-storage", "beed0461c687a09fb9bbb5a43d9a1c12b47c0b26");
         Assertions.assertEquals("rodrigoprestesmachado", commit.getAuthor().getLogin());
     } 
     @Test
     @DisplayName("Commit Mapper Test Files")
     @Order(2)
-    public void testCommitgetFilesSize(){
+    void testCommitgetFilesSize(){
        commit = github.getCommit("rpmhub", "cpw2-web-storage", "beed0461c687a09fb9bbb5a43d9a1c12b47c0b26");
         Assertions.assertEquals(3, commit.getFiles().size());
     } 
