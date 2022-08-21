@@ -13,12 +13,12 @@
 
         <div class="form-group">
           <label for="moodleProfileURL">Insira o link do seu perfil no Moodle</label>
-          <input type="text" class="form-control" ref="moodleProfileURL" placeholder="Exemplo: http://localhost/user/profile.php?id=5" />
+          <input type="text" class="form-control" ref="moodleProfileURL" placeholder="Exemplo: https://moodle.poa.ifrs.edu.br/user/profile.php?id=5" />
         </div>
 
         <div class="form-group">
           <label for="moodleAssignURL">Insira o link da tarefa no Moodle</label>
-          <input type="text" class="form-control" ref="moodleAssignURL" placeholder="Exemplo: http://localhost/mod/assign/view.php?id=2" />
+          <input type="text" class="form-control" ref="moodleAssignURL" placeholder="Exemplo: https://moodle.poa.ifrs.edu.br/mod/assign/view.php?id=2" />
         </div>
 
         <button class="btn btn-primary" @click="postData">Enviar dados</button>
@@ -33,8 +33,6 @@
 </template>
 
 <script>
-const baseURL = "http://localhost:8080";
-
 export default {
   name: "App",
   data() {
@@ -57,7 +55,7 @@ export default {
       params.append("moodleAssignURL", this.$refs.moodleAssignURL.value);
 
       try {
-        const res = await fetch(`${baseURL}/check`, {
+        const res = await fetch(`/check`, {
           method: "post",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
