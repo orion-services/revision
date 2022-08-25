@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.orion.revision;
+package dev.orion.revision.clients;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -81,7 +81,8 @@ public class MoodleMock implements QuarkusTestResourceLifecycleManager {
                 .withBody("")
                 .withStatus(200)));               
 
-            return Collections.singletonMap("dev.orion.revision.clients.Moodle/mp-rest/url", wireMockServer.baseUrl());
+
+        return Collections.singletonMap("dev.orion.revision.clients.Moodle/mp-rest/url", wireMockServer.baseUrl());
             
     }
 

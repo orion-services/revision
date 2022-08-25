@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import com.google.inject.Inject;
 
+import dev.orion.revision.clients.MoodleMock;
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 
@@ -15,6 +17,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 
 
 @QuarkusTest
+@QuarkusTestResource(MoodleMock.class)
 class RevisionServiceTest {
 
     @Inject
@@ -50,7 +53,6 @@ class RevisionServiceTest {
             .body(is("{\"Message\":\"Não foi possível completar a sua requisição, possivelmente você informou um usuário do Github inexistente\"}"));
      }
 
-    /*
      
     @Test
     @DisplayName("Test wrong Moodle user")
@@ -58,27 +60,28 @@ class RevisionServiceTest {
     void wrongMoodleUser() {
          given()
             .formParam("githubProfileURL", "https://github.com/amfabian")
-            .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br")
-            .formParam("moodleAssignURL", "http://localhost/mod/assign/view.php?id=2")
+            .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br/user/profile.php?id=15")
+            .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br/")
             .when().post()
             .then()
             .statusCode(404);
      }
 
+    /*
+
     @Test
     @DisplayName("Test wrong Assign")
-    @Order(5)
+    @Order(4)
     void wrongAssign() {
          given()
             .formParam("githubProfileURL", "https://github.com/graziellarodrigues")
-            .formParam("moodleProfileURL", "http://moodle.poa.ifrs.edu.br/user/profile.php?id=4")
+            .formParam("moodleProfileURL", "http:/localhost:8089/user/profile.php?id=4")
             .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br/")
             .when().post()
             .then()
             .statusCode(404);
     }
              
-     
     @Test
     @DisplayName("Test wrong moodle")
     @Order(3)
