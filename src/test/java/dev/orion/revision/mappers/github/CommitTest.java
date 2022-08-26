@@ -1,4 +1,4 @@
-package dev.orion.revision;
+package dev.orion.revision.mappers.github;
 
 import javax.inject.Inject;
 
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import dev.orion.revision.clients.Github;
-import dev.orion.revision.mappers.github.Commit;
 import dev.orion.revision.mappers.moodle.User;
 import io.quarkus.test.junit.QuarkusTest;
 
