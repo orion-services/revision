@@ -13,7 +13,7 @@ Atualmente o serviço de revisão implementa uma cadeia de verificações (Check
 
 ## Configuração do Moodle
 
-Para a integração será necessário criar um web service dentro do Moodle. Sugerimos que sejam seguidos os passos da página Site Administration > Server > Web services > Overview (dispponível geralmente em http://endereco-do-moodle/admin/settings.php?section=webservicesoverview). Os passos são:
+Para a integração será necessário criar um web service dentro do Moodle. Sugerimos que sejam seguidos os passos da página Site Administration > Server > Web services > Overview (disponível geralmente em http://endereco-do-moodle/admin/settings.php?section=webservicesoverview). Os passos são:
 
 1. Enable web services - habilitar o web service
 2. Enable protocols - habilitar o *REST protocol*
@@ -23,17 +23,20 @@ Para a integração será necessário criar um web service dentro do Moodle. Sug
 5. Select a service - neste momento criamos o web service Clique em Add, defina o nome do serviço e marque as opções Enabled e Authorised users only
 6. Add functions - aque iremos selecionar as funções do Moodle que o serviço terá acesso. Libere, uma a uma, as seguintes funções:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* core_webservice_get_site_info
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* core_course_get_course_module
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* core_course_get_enrolled_users_by_cmid
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* core_user_get_users
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* mod_assign_get_assignments
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* mod_assign_save_grade
+* core_webservice_get_site_info
+* core_course_get_course_module
+* core_course_get_enrolled_users_by_cmid
+* core_user_get_users
+* mod_assign_get_assignments
+* mod_assign_save_grade
 
 7. Select a specific user - No serviço que você criou você deverá vincular o usuário do web service criado anteriormente. Clique em Authorized Users e adicione apenas o usuário do web service na lista de usuário com acesso permitido.
-8. Create a token for a user - Selecione o usuário do web service, o nome do serviço criado e clique em *Save Changes*. Se desejar ampliar a segurança do web service é possível nesta tela fazer a restrição do IP e definir um período de validade do token.
+8. Create a token for a user - Selecione o usuário do web service, o nome do serviço criado e clique em *Save Changes*. Anote o token. Se desejar ampliar a segurança do web service é possível nesta tela fazer a restrição do IP e definir um período de validade do token.
 9. Enable developer documentation - Habilite a documentação do web service do Moodle.
 
+## Configuração da aplicação
+
+Edite o arquivo /src/main/resources/application.properties inserindo o endereço do webservice e seu respectivo token.
 ## Configuração de uma atividade no Moodle
 
 Para que o web service consiga acessar as tarefas e lista de alunos de um determinado curso, o usuário do web service criado nos passos acima precisará estar inscrito no curso.
