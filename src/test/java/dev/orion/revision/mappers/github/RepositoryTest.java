@@ -41,4 +41,11 @@ class RepositoryTest {
         repo = github.getRepo("graziellarodrigues", "cpw2-web-storage");
         Assertions.assertEquals("435871324", repo.getParent().getId());
     } 
+    @Test
+    @DisplayName("Repository Mapper Test Source")
+    @Order(4)
+    void testRepositorySource(){
+        repo = github.getRepo("graziellarodrigues", "cpw2-web-storage");
+        Assertions.assertEquals("435871324", repo.getSource().getId());
+    }
 }
