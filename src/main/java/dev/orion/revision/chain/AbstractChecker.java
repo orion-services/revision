@@ -193,8 +193,8 @@ public abstract class AbstractChecker {
      *
      * @return Return a list of users enrolled in a course module from Moodle
      */
-    protected ListUser getMoodleEnrolledUsers(Module courseModule){
-        return moodle.getEnrolled(MOODLE_TOKEN, MOODLE_ENROLLED, MOODLE_JSON_FORMAT, courseModule.getCm().getCourse());
+    protected ListUser getMoodleEnrolledUsers(String moodleAssignURL){
+        return moodle.getEnrolled(MOODLE_TOKEN, MOODLE_ENROLLED, MOODLE_JSON_FORMAT, this.getMoodleId(moodleAssignURL));
     }
 
     /**

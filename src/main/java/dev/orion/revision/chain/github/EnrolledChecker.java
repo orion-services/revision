@@ -47,14 +47,11 @@ public class EnrolledChecker extends AbstractChecker implements Checker {
 
     boolean result = false;
 
-    // Get course module
-    Module module = getCourseModule(input.get("moodleAssignURL"));
-
     // Get Moodle user
     ListUser mUsers = getMoodleUser(input.get("moodleProfileURL"));
-
     // Get list of enrolled students
-    ListUser mCourseUsers = getMoodleEnrolledUsers(module);
+    ListUser mCourseUsers = getMoodleEnrolledUsers(input.get("moodleAssignURL"));
+
     boolean enrolled = false;
     
     for (User user : mCourseUsers) {
@@ -62,11 +59,11 @@ public class EnrolledChecker extends AbstractChecker implements Checker {
       if (mUsers.getFirstUserName().equalsIgnoreCase(user.getFullname())) {
         enrolled = true;        
         break;
-      } 
+      }
     }
 
     if (enrolled) {
-      LOGGER.info("O usuário está matrículado no curso");
+      LOGGER.info("O aluno " + mUsers.getFirstUserName() + " está matrículado no curso");
       result = this.getNextChecker().check(input);
     } else {
       String message = messages.getString("EnrolledChecker.notEnrolled");
