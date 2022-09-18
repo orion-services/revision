@@ -77,8 +77,8 @@ public class RevisionService {
      * 4 - Sends the result to Moodle
      *
      * @param githubProfileURL : The URL of a profile in Github
-     * @param moodleProfileURL : The URL of a profile in Moodle
-     * @param moodleAssignURL : The URL of an assign in Moodle
+     * @param moodleProfileURL : The id of a profile in Moodle
+     * @param moodleAssignURL : The id of an assign in Moodle
      * @param language The language of the return messages
      *
      * @return true if the method was able to execute all chain
@@ -91,8 +91,8 @@ public class RevisionService {
     @Bulkhead(3)
     public Map<String,String> check(
             @URL @NotBlank @FormParam("githubProfileURL") String githubProfileURL,
-            @URL @NotBlank @FormParam("moodleProfileURL") String moodleProfileURL,
-            @URL @NotBlank @FormParam("moodleAssignURL") String moodleAssignURL,
+            @NotBlank @FormParam("moodleProfileURL") String moodleProfileURL,
+            @NotBlank @FormParam("moodleAssignURL") String moodleAssignURL,
             @HeaderParam("Content-Language") String language) {
                 ResourceBundle messages = AbstractChecker.setLocation(language);
                 String message = null;

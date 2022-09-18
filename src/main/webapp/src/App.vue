@@ -11,16 +11,6 @@
           <input type="text" class="form-control" ref="githubProfileURL" placeholder="Exemplo: https://github.com/psantunes" />
         </div>
 
-        <div class="form-group">
-          <label for="moodleProfileURL">Insira o link do seu perfil no Moodle</label>
-          <input type="text" class="form-control" ref="moodleProfileURL" placeholder="Exemplo: https://moodle.poa.ifrs.edu.br/user/profile.php?id=5" />
-        </div>
-
-        <div class="form-group">
-          <label for="moodleAssignURL">Insira o link da tarefa no Moodle</label>
-          <input type="text" class="form-control" ref="moodleAssignURL" placeholder="Exemplo: https://moodle.poa.ifrs.edu.br/mod/assign/view.php?id=2" />
-        </div>
-
         <button class="btn btn-primary" @click="postData">Enviar dados</button>
         <button class="btn btn-secondary ml-2" @click="clearForm">Limpar</button>
 
@@ -33,6 +23,10 @@
 </template>
 
 <script>
+let paramsFromUrl = new URLSearchParams(window.location.search);
+let assign = paramsFromUrl.get('assign');
+let user = paramsFromUrl.get('user');
+
 export default {
   name: "App",
   data() {
@@ -43,16 +37,14 @@ export default {
   },
   methods: {
     fortmatResponse(res) {
-    const obj = JSON.parse(JSON.stringify(res));
-    return obj.Message;
+      const obj = JSON.parse(JSON.stringify(res));
+      return obj.Message;
     },
-
     async postData() {
-
       const params = new URLSearchParams();
       params.append("githubProfileURL", this.$refs.githubProfileURL.value);
-      params.append("moodleProfileURL", this.$refs.moodleProfileURL.value);
-      params.append("moodleAssignURL", this.$refs.moodleAssignURL.value);
+      params.append("moodleProfileURL", user);
+      params.append("moodleAssignURL", assign);
 
       try {
         const res = await fetch(`/check`, {

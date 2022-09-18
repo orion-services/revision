@@ -60,8 +60,8 @@ class RevisionServiceTest {
     void wrongMoodleUser() {
          given()
             .formParam("githubProfileURL", "https://github.com/amfabian")
-            .formParam("moodleProfileURL", "https://moodle.poa.ifrs.edu.br/user/profile.php?id=15")
-            .formParam("moodleAssignURL", "https://moodle.poa.ifrs.edu.br/")
+            .formParam("moodleProfileURL", "15")
+            .formParam("moodleAssignURL", "2")
             .when().post()
             .then()
             .statusCode(404);
