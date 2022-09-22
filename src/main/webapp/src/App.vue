@@ -45,8 +45,8 @@ export default {
 
       const params = new URLSearchParams();
       params.append("githubProfileURL", this.$refs.githubProfileURL.value);
-      params.append("moodleProfileURL", user);
-      params.append("moodleAssignURL", assign);
+      params.append("moodleProfile", user);
+      params.append("moodleAssign", assign);
 
       try {
         const res = await fetch(`/check`, {

@@ -77,8 +77,8 @@ public class RevisionService {
      * 4 - Sends the result to Moodle
      *
      * @param githubProfileURL : The URL of a profile in Github
-     * @param moodleProfileURL : The id of a profile in Moodle
-     * @param moodleAssignURL : The id of an assign in Moodle
+            * @param moodleProfile : The Id of a user profile in Moodle
+            * @param moodleAssign : The id of an assign in Moodle
      * @param language The language of the return messages
      *
      * @return true if the method was able to execute all chain
@@ -91,14 +91,14 @@ public class RevisionService {
     @Bulkhead(3)
     public Map<String,String> check(
             @URL @NotBlank @FormParam("githubProfileURL") String githubProfileURL,
-            @NotBlank @FormParam("moodleProfileURL") String moodleProfileURL,
-            @NotBlank @FormParam("moodleAssignURL") String moodleAssignURL,
+            @NotBlank @FormParam("moodleProfile") String moodleProfile,
+            @NotBlank @FormParam("moodleAssign") String moodleAssign,
             @HeaderParam("Content-Language") String language) {
                 ResourceBundle messages = AbstractChecker.setLocation(language);
                 String message = null;
                 String result = null;
                 try {
-                    Map<String,String> input = this.createGithubInput(githubProfileURL, moodleProfileURL, moodleAssignURL, language);
+                    Map<String,String> input = this.createGithubInput(githubProfileURL, moodleProfile, moodleAssign, language);
                     Checker githubChain = this.createGithubChain();
                     LOGGER.info(input.get("hash"));
                     result = Boolean.toString(githubChain.check(input));
@@ -141,22 +141,22 @@ public class RevisionService {
      * Encapsulates the input to a Map object
      *
      * @param githubProfileURL : The URL of a profile in Github
-     * @param moodleProfileURL : The URL of a profile in Moodle
-     * @param moodleAssignURL : The URL of an assign in Moodle
+     * @param moodleProfile : The Id of a user profile in Moodle
+     * @param moodleAssign : The Id of an assign in Moodle
      * @param language The language of the return messages
      *
      * @return A Map object with all inputs
      */
     private Map<String,String> createGithubInput(
         String githubProfileURL,
-        String moodleProfileURL,
-        String moodleAssignURL,
+        String moodleProfile,
+        String moodleAssign,
         String language){
 
         Map<String,String> input = new HashMap<>();
         input.put("githubProfileURL", githubProfileURL);
-        input.put("moodleProfileURL", moodleProfileURL);
-        input.put("moodleAssignURL", moodleAssignURL);
+        input.put("moodleProfile", moodleProfile);
+        input.put("moodleAssign", moodleAssign);
         input.put("language", language);
         input.put("hash", UUID.randomUUID().toString());
 

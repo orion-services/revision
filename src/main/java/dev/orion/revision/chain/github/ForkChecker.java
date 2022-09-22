@@ -51,10 +51,10 @@ public class ForkChecker extends AbstractChecker implements Checker  {
         boolean result = false;
         String githubLogin = getGithubLogin(input.get("githubProfileURL"));
         
-        String moodleAssignURL = input.get("moodleAssignURL");
-        Module module = getCourseModule(moodleAssignURL);
+        String moodleAssign = input.get("moodleAssign");
+        Module module = getCourseModule(moodleAssign);
         ListCourse courses = getMoodleCourse(module);
-        String intro = this.getAssignIntro(courses, moodleAssignURL);
+        String intro = this.getAssignIntro(courses, moodleAssign);
         Repository repo = github.getRepo(githubLogin, this.getAssignConfig(intro).get("repo"));
         
         if(repo.getParent().getId().equalsIgnoreCase(repo.getSource().getId())){

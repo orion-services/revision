@@ -55,14 +55,14 @@ public class TestChangeChecker extends AbstractChecker implements Checker {
         // Module in this case will be the assign
         // This step discoveries the course id and the instance id (real data base id)
         // The instance id is necessary to update the grade
-        Module module = getCourseModule(input.get("moodleAssignURL"));
+        Module module = getCourseModule(input.get("moodleAssign"));
 
         // Returns the courses and the assigns
         // We need this step to retrieve the assign intro (description)
         ListCourse courses = getMoodleCourse(module);
 
         // Gets the assign intro (description)
-        String intro = this.getAssignIntro(courses, input.get("moodleAssignURL"));
+        String intro = this.getAssignIntro(courses, input.get("moodleAssign"));
 
         // Get the YAML from the assign
         if (intro != null) {

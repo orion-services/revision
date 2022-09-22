@@ -47,9 +47,9 @@ public class EnrolledChecker extends AbstractChecker implements Checker {
     boolean result = false;
 
     // Get Moodle user
-    ListUser mUsers = getMoodleUser(input.get("moodleProfileURL"));
+    ListUser mUsers = getMoodleUser(input.get("moodleProfile"));
     // Get list of enrolled students
-    ListUser mCourseUsers = getMoodleEnrolledUsers(input.get("moodleAssignURL"));
+    ListUser mCourseUsers = getMoodleEnrolledUsers(input.get("moodleAssign"));
 
     boolean enrolled = false;
     
