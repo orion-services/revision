@@ -27,7 +27,6 @@ import dev.orion.revision.chain.AbstractChecker;
 import dev.orion.revision.chain.Checker;
 import dev.orion.revision.exceptions.RevisionServiceException;
 import dev.orion.revision.mappers.moodle.ListUser;
-import dev.orion.revision.mappers.moodle.Module;
 import dev.orion.revision.mappers.moodle.User;
 
 /**
