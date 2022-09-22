@@ -41,6 +41,8 @@ export default {
       return obj.Message;
     },
     async postData() {
+      this.postResult = "Enviando dados. Aguarde...";
+
       const params = new URLSearchParams();
       params.append("githubProfileURL", this.$refs.githubProfileURL.value);
       params.append("moodleProfileURL", user);
