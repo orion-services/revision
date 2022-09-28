@@ -37,11 +37,14 @@ Para a integração será necessário criar um web service dentro do Moodle. Sug
 ## Configuração da aplicação
 
 Edite o arquivo /src/main/resources/application.properties inserindo o endereço do webservice e seu respectivo token.
+
 ## Configuração de uma atividade no Moodle
 
-Para que o web service consiga acessar as tarefas e lista de alunos de um determinado curso, o usuário do web service criado nos passos acima precisará estar inscrito no curso.
+**Importante:** Para que o web service consiga acessar as tarefas e lista de alunos de um determinado curso, o usuário do web service criado nos passos acima precisará estar inscrito no curso.
 
-Feito isto é possível configurar uma atividade (*Assign*) para que possa ser utilizada com o serviço de revisão. Existem três informações importantes que necessitam serem informadas pra o serviço, são elas: repo (repositório do exercício), workflow (o arquivo do Github Actions) e o arquivo que implementa os testes (nota: atualmente todos os testes devem ficar num único arquivo). Um exemplo dessa configuração pode ser observada abaixo:
+### Passo 1
+
+O primeiro passo é configurar uma atividade (*Assign*) para que possa ser utilizada com o serviço de revisão. Existem três informações importantes que necessitam serem informadas pra o serviço, são elas: repo (repositório do exercício), workflow (o arquivo do Github Actions) e o arquivo que implementa os testes (nota: atualmente todos os testes devem ficar num único arquivo). Estas informações devem seguir o formato abaixo:
 
 ```html
 <!--
@@ -51,4 +54,26 @@ Feito isto é possível configurar uma atividade (*Assign*) para que possa ser u
 -->
 ```
 
-Note que a configuração deve ser informada em uma atividade no Moodle como um comentário de HTML e que o conteúdo segue o formato YAML.
+Esta configuração deve ser informada em uma atividade no Moodle como um comentário de HTML (use a opção Edit HTML Source) e o conteúdo acima precisa estar em formato YAML.
+
+A seguir anote o número do assign, que consta na URL da tarefa. Por exemplo, se o link do assign fosse o endereço abaixo:
+http://endereco-do-moodle/mod/assign/view.php?id=4135
+Anote o código 4135.
+
+### Passo 2
+
+Configurada a tarefa, é preciso inserir no Moodle um link para que os alunos possam acessar o Revision e postarem os seus repositórios com a tarefa finalizada.
+
+Crie uma nova atividade, do tipo URL. Ela deve apontar para o endereço do frontend do Revision. Após o endereço, coloque ainda um parâmeto assign com o número da tarefa, de forma que o link fique da seguinte forma:
+
+http://endereco-do-moodle/mod/assign/view.php?assign=4135
+
+Clique na opção URL Variables e inseia ali um parâmetro com o nome id e o valor User id. Desta forma o Moodle passará para o Revision automaticamente a id do aluno.
+
+Salve o link.
+
+O link gerado deverá ficar com o formato abaixo:
+
+http://endereco-do-revision/?assign=4135&id=2123
+
+Repare que ele precisa de dois parâmetros: o número do assign, que precisa ser inserido manualmente na criação do link e o número do id do aluno, que é inserido automaticamente pelo Moodle, e será diferente para cada aluno.
