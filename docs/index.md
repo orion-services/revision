@@ -57,18 +57,20 @@ O primeiro passo é configurar uma atividade (*Assign*) para que possa ser utili
 Esta configuração deve ser informada em uma atividade no Moodle como um comentário de HTML (use a opção Edit HTML Source) e o conteúdo acima precisa estar em formato YAML.
 
 A seguir anote o número do assign, que consta na URL da tarefa. Por exemplo, se o link do assign fosse o endereço abaixo:
+
 http://endereco-do-moodle/mod/assign/view.php?id=4135
-Anote o código 4135.
+
+Anote o código do assing.
 
 ### Passo 2
 
 Configurada a tarefa, é preciso inserir no Moodle um link para que os alunos possam acessar o Revision e postarem os seus repositórios com a tarefa finalizada.
 
-Crie uma nova atividade, do tipo URL. Ela deve apontar para o endereço do frontend do Revision. Após o endereço, coloque ainda um parâmeto assign com o número da tarefa, de forma que o link fique da seguinte forma:
+Crie uma nova atividade, do tipo URL. Ela deve apontar para o endereço do frontend do Revision. Após digitar a URL, coloque ainda um parâmeto assign com o número da tarefa, de forma que o link fique da seguinte forma:
 
-http://endereco-do-moodle/mod/assign/view.php?assign=4135
+http://endereco-do-revision/?assign=4135
 
-Clique na opção URL Variables e inseia ali um parâmetro com o nome id e o valor User id. Desta forma o Moodle passará para o Revision automaticamente a id do aluno.
+Clique na opção URL Variables e insira ali um parâmetro. O nome do parâmetro precisa se chamar id. O valor deste parâmetro de ver ser o id do User. Desta forma o Moodle passará para o Revision automaticamente a id do estudante matriculado que submeter sua tarefa.
 
 Salve o link.
 
@@ -76,4 +78,6 @@ O link gerado deverá ficar com o formato abaixo:
 
 http://endereco-do-revision/?assign=4135&id=2123
 
-Repare que ele precisa de dois parâmetros: o número do assign, que precisa ser inserido manualmente na criação do link e o número do id do aluno, que é inserido automaticamente pelo Moodle, e será diferente para cada aluno.
+Repare que para funcionar, o link precisará de dois parâmetros: o número do assign, que precisa ser inserido manualmente no cadastro da URL e o número do id do aluno, que é inserido automaticamente pelo Moodle, e será diferente para cada aluno.
+
+Para cada tarefa que usar o Revision é preciso criar um nova URL.
