@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - development
-      - deploy
+
   pull_request:
     types: [opened, synchronize, reopened]
 

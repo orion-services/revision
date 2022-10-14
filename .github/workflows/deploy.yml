@@ -1,11 +1,13 @@
-name: Deploy Demo
-run-name: ${{ github.actor }} is testing Package on GitHub Actions 🚀
+name: Orion Revision Deploy on Dockerhub 🚀
+run-name: ${{ github.actor }} is testing Package on GitHub Actions 
 on:
   push:
     branches:
       - main
       - development
-      - deploy
+      
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   build:
 
@@ -29,6 +31,8 @@ jobs:
     - name: Package
       run: ./mvnw package
       
-    - name: Build
-      run: docker build -f src/main/docker/Dockerfile.jvm -t quarkus/moodle-jvm .
-      
+    - name: Build & Push Image
+      run: |
+        echo "${{ secrets.DOCKERHUB_PS }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        docker image build -f src/main/docker/Dockerfile.jvm -t ${{ secrets.DOCKERHUB_USERNAME }}/revision:latest .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/revision:latest 
