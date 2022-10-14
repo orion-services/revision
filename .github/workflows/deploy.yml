@@ -23,8 +23,12 @@ jobs:
     - name: Verify
       run: mvn -B verify
     
-    - name: Package a
+    - name: Pre Package
       run: chmod +x mvnw
 
     - name: Package
       run: ./mvnw package
+      
+    - name: Build
+      run: docker build -f src/main/docker/Dockerfile.jvm -t quarkus/moodle-jvm .
+      
