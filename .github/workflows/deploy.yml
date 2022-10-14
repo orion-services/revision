@@ -1,5 +1,4 @@
 name: Orion Revision Deploy on Dockerhub 🚀
-run-name: ${{ github.actor }} is testing Package on GitHub Actions 
 on:
   push:
     branches:
