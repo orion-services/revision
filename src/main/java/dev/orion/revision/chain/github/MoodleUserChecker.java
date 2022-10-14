@@ -52,11 +52,11 @@ public class MoodleUserChecker extends AbstractChecker implements Checker {
         User gUser = getGithubUser(input.get("githubProfileURL"));
 
         // Get Moodle user
-        ListUser mUsers = getMoodleUser(input.get("moodleProfileURL"));
+        ListUser mUsers = getMoodleUser(input.get("moodleProfile"));
 
         if (mUsers != null &&  gUser != null){
             // Verifies if the Moodle and Github name are the same
-            if (mUsers.getFirstUserName().equalsIgnoreCase(gUser.getName())) {
+               if (mUsers.getFirstUserName().equalsIgnoreCase(gUser.getName())) {
                 LOGGER.info("O usuário do Moodle e Github são os mesmos");
                 // send to the next checker
                 result = this.getNextChecker().check(input);

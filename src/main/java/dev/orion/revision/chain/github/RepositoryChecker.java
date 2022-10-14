@@ -49,20 +49,20 @@ public class RepositoryChecker extends AbstractChecker implements Checker {
 
         boolean result = false;
 
-        String moodleAssignURL = input.get("moodleAssignURL");
+        String moodleAssign = input.get("moodleAssign");
         String githubLogin = getGithubLogin(input.get("githubProfileURL"));
 
         // Module in this case will be the assign
         // This step discoveries the course id and the instance id (the data base id)
         // The instance id is necessary to update the grade
-        Module module = getCourseModule(moodleAssignURL);
+        Module module = getCourseModule(moodleAssign);
 
         // Returns the courses and the assigns
         // We need this step to retrieve the assign intro (description)
         ListCourse courses = getMoodleCourse(module);
 
         // Gets the assign intro (description)
-        String intro = this.getAssignIntro(courses, moodleAssignURL);
+        String intro = this.getAssignIntro(courses, moodleAssign);
 
          // Get the YAML from the assign
          if (intro != null) {

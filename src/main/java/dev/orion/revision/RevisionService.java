@@ -42,6 +42,7 @@ import org.jboss.resteasy.client.exception.ResteasyWebApplicationException;
 import dev.orion.revision.chain.AbstractChecker;
 import dev.orion.revision.chain.Checker;
 import dev.orion.revision.chain.github.EnrolledChecker;
+import dev.orion.revision.chain.github.ForkChecker;
 import dev.orion.revision.chain.github.MoodleUserChecker;
 import dev.orion.revision.chain.github.RepositoryChecker;
 import dev.orion.revision.chain.github.TestChangeChecker;
@@ -62,6 +63,7 @@ public class RevisionService {
     @Inject protected MoodleUserChecker moodleUser;
     @Inject protected EnrolledChecker enrolled;
     @Inject protected RepositoryChecker repository;
+    @Inject protected ForkChecker fork;
     @Inject protected TestChangeChecker testChange;
     @Inject protected MoodleSendChecker moodleSend;
 
@@ -75,8 +77,8 @@ public class RevisionService {
      * 4 - Sends the result to Moodle
      *
      * @param githubProfileURL : The URL of a profile in Github
-     * @param moodleProfileURL : The URL of a profile in Moodle
-     * @param moodleAssignURL : The URL of an assign in Moodle
+            * @param moodleProfile : The Id of a user profile in Moodle
+            * @param moodleAssign : The id of an assign in Moodle
      * @param language The language of the return messages
      *
      * @return true if the method was able to execute all chain
@@ -89,36 +91,36 @@ public class RevisionService {
     @Bulkhead(3)
     public Map<String,String> check(
             @URL @NotBlank @FormParam("githubProfileURL") String githubProfileURL,
-            @URL @NotBlank @FormParam("moodleProfileURL") String moodleProfileURL,
-            @URL @NotBlank @FormParam("moodleAssignURL") String moodleAssignURL,
+            @NotBlank @FormParam("moodleProfile") String moodleProfile,
+            @NotBlank @FormParam("moodleAssign") String moodleAssign,
             @HeaderParam("Content-Language") String language) {
                 ResourceBundle messages = AbstractChecker.setLocation(language);
                 String message = null;
                 String result = null;
                 try {
-                    Map<String,String> input = this.createGithubInput(githubProfileURL, moodleProfileURL, moodleAssignURL, language);
+                    Map<String,String> input = this.createGithubInput(githubProfileURL, moodleProfile, moodleAssign, language);
                     Checker githubChain = this.createGithubChain();
                     LOGGER.info(input.get("hash"));
                     result = Boolean.toString(githubChain.check(input));
                 }
                 catch (IndexOutOfBoundsException e) {
                     message = messages.getString("RevisionService.IndexOutOfBoundsException");
-                    throw new RevisionServiceException(message, Response.Status.NOT_FOUND);
+                    throw new RevisionServiceException(message, Response.Status.BAD_REQUEST);
                 }
                 catch(ResteasyWebApplicationException e){
                     message = messages.getString("RevisionService.ResteasyWebApplicationException");
-                    throw new RevisionServiceException(message, Response.Status.NOT_FOUND);
+                    throw new RevisionServiceException(message, Response.Status.BAD_REQUEST);
                 }
                 catch(NullPointerException e){
                     message = messages.getString("RevisionService.NullPointerException");
-                    throw new RevisionServiceException(message, Response.Status.NOT_FOUND);
+                    throw new RevisionServiceException(message, Response.Status.BAD_REQUEST);
                 }
 
                 if (result.equals("true")) {
                     message = "Tarefa enviada com sucesso!";
                 }
-                Map<String, String> response = Map.of("Message", message);
-                return response;
+
+                return Map.of("Message", message);
     }
 
     /**
@@ -129,7 +131,8 @@ public class RevisionService {
     private Checker createGithubChain(){
         moodleUser.setNextChecker(enrolled);
         enrolled.setNextChecker(repository);
-        repository.setNextChecker(testChange);
+        repository.setNextChecker(fork);
+        fork.setNextChecker(testChange);
         testChange.setNextChecker(moodleSend);
         return moodleUser;
     }
@@ -138,22 +141,22 @@ public class RevisionService {
      * Encapsulates the input to a Map object
      *
      * @param githubProfileURL : The URL of a profile in Github
-     * @param moodleProfileURL : The URL of a profile in Moodle
-     * @param moodleAssignURL : The URL of an assign in Moodle
+     * @param moodleProfile : The Id of a user profile in Moodle
+     * @param moodleAssign : The Id of an assign in Moodle
      * @param language The language of the return messages
      *
      * @return A Map object with all inputs
      */
     private Map<String,String> createGithubInput(
         String githubProfileURL,
-        String moodleProfileURL,
-        String moodleAssignURL,
+        String moodleProfile,
+        String moodleAssign,
         String language){
 
         Map<String,String> input = new HashMap<>();
         input.put("githubProfileURL", githubProfileURL);
-        input.put("moodleProfileURL", moodleProfileURL);
-        input.put("moodleAssignURL", moodleAssignURL);
+        input.put("moodleProfile", moodleProfile);
+        input.put("moodleAssign", moodleAssign);
         input.put("language", language);
         input.put("hash", UUID.randomUUID().toString());
 

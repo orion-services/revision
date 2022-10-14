@@ -90,14 +90,14 @@ public abstract class AbstractChecker {
      * Discovers the assign intro of a course
      *
      * @param courses :  A list of course (with only one course)
-     * @param moodleAssignURL : The URL of the assign
+     * @param moodleAssign : The Id of the assign
      *
      * @return The intro (description) of one assign
      */
-    protected String getAssignIntro(ListCourse courses, String moodleAssignURL) {
+    protected String getAssignIntro(ListCourse courses, String moodleAssign) {
         String intro = null;
         List<Assign> assigns = courses.getCourses().get(0).getAssignments();
-        Integer idAssign = Integer.valueOf(this.getMoodleId(moodleAssignURL));
+        Integer idAssign = Integer.valueOf(this.getMoodleId(moodleAssign));
         for (Assign assign : assigns) {
             if (assign.getCmid() == idAssign ) {
                 intro = assign.getIntro();
@@ -177,13 +177,13 @@ public abstract class AbstractChecker {
     /**
      * Returns a list of users from Moodle
      *
-     * @param moodleProfileURL : The URL of a profile in Moodle
+     * @param moodleProfile : The ID of a user profile in Moodle
      *
      * @return Return a ListUser object from Moodle
      */
-    protected ListUser getMoodleUser(String moodleProfileURL){
+    protected ListUser getMoodleUser(String moodleProfile){
         return moodle.getUser(MOODLE_TOKEN, MOODLE_USERS, MOODLE_JSON_FORMAT, "id",
-        this.getMoodleId(moodleProfileURL));
+        this.getMoodleId(moodleProfile));
     }
 
     /**
@@ -193,8 +193,8 @@ public abstract class AbstractChecker {
      *
      * @return Return a list of users enrolled in a course module from Moodle
      */
-    protected ListUser getMoodleEnrolledUsers(Module courseModule){
-        return moodle.getEnrolled(MOODLE_TOKEN, MOODLE_ENROLLED, MOODLE_JSON_FORMAT, courseModule.getCm().getCourse());
+    protected ListUser getMoodleEnrolledUsers(String moodleAssign){
+        return moodle.getEnrolled(MOODLE_TOKEN, MOODLE_ENROLLED, MOODLE_JSON_FORMAT, this.getMoodleId(moodleAssign));
     }
 
     /**
@@ -202,13 +202,13 @@ public abstract class AbstractChecker {
      * This step discoveries the course id and the instance id (real data base id)
      * The instance id is necessary to update the grade
      *
-     * @param moodleAssignURL : The URL of an assign
+     * @param moodleAssign : The Id of an assign
      *
      * @return Returns the curse module object in Moodle
      */
-    protected Module getCourseModule(String moodleAssignURL){
+    protected Module getCourseModule(String moodleAssign){               
         return moodle.getModule(MOODLE_TOKEN, MOODLE_MODULE, MOODLE_JSON_FORMAT,
-                this.getMoodleId(moodleAssignURL));
+                this.getMoodleId(moodleAssign));
     }
 
     /**

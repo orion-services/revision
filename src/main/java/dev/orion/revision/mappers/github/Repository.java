@@ -17,15 +17,42 @@
 package dev.orion.revision.mappers.github;
 
 public class Repository {
-
+    
+    private String id;
     private boolean fork;
-
+    private Repository parent;
+    private Repository source;
+    
     public boolean isFork() {
         return fork;
     }
 
     public void setFork(boolean fork) {
         this.fork = fork;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Repository getParent() {
+        return parent;
+    }
+
+    public void setParent(Repository parent) {
+        this.parent = parent;
+    }
+
+    public Repository getSource() {
+        return source;
+    }
+
+    public void setSource(Repository source) {
+        this.source = source;
     }
 
 }

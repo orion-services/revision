@@ -41,5 +41,8 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ]
+  ],
+  "optionalDependencies": {
+    "fsevents": "^2.1.2"
+  }
 }

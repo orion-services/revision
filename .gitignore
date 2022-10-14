@@ -9,3 +9,5 @@ target/
 .apt_generated_tests
 .settings
 .history
+src/main/resources/META-INF/resources/
+src/main/webapp/node_modules/
