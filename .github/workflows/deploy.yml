@@ -22,6 +22,9 @@ jobs:
 
     - name: Verify
       run: mvn -B verify
+    
+    - name: Package a
+      run: chmod +x mvnw
 
     - name: Package
       run: ./mvnw package
