@@ -1,0 +1,37 @@
+name: Orion-services Revision Deploy on Dockerhub 🚀
+on:
+  push:
+    branches:
+      - main
+      - development
+      
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Verify
+      run: mvn -B verify
+    
+    - name: Pre Package
+      run: chmod +x mvnw
+
+    - name: Package
+      run: ./mvnw package
+      
+    - name: Build & Push Image
+      run: |
+        echo "${{ secrets.DOCKERHUB_PS }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        docker image build -f src/main/docker/Dockerfile.jvm -t ${{ secrets.DOCKERHUB_USERNAME }}/revision:latest .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/revision:latest 
