@@ -1,4 +1,4 @@
-name: Orion Revision Deploy on Dockerhub 🚀
+name: Orion-services Revision Deploy on Dockerhub 🚀
 on:
   push:
     branches:
